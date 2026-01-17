@@ -1,16 +1,18 @@
 # Perceptron Demo - Linear Classification
 
-An interactive visualization of how a perceptron (the simplest neural network) learns to classify points using a linear decision boundary.
+An interactive visualisation of how a perceptron (the simplest neural network) learns to classify points using a linear decision boundary.
+
+🔗 **[Live Demo](https://christopherdkeith.github.io/ai-perceptron-demo/)** 🔗
 
 ## Overview
 
-This educational demo shows the fundamental principles of machine learning by visualizing how a single-neuron perceptron learns to separate points into two classes. Watch in real-time as the algorithm adjusts its weights and bias to find the perfect line that classifies all points correctly.
+This educational demo shows the fundamental principles of machine learning by visualising how a single-neuron perceptron learns to separate points into two classes. Watch in real-time as the algorithm adjusts its weights and bias to find the perfect line that classifies all points correctly.
 
 **Key Insight:** The perceptron IS a line, defined by just three numbers (Weight_x, Weight_y, and Bias). Learning means adjusting these three numbers to position and angle the line correctly.
 
 ## Features
 
-- **Real-time Visualization**: Watch the decision boundary (orange dashed line) adjust as the perceptron learns
+- **Real-time Visualisation**: Watch the decision boundary (orange dashed line) adjust as the perceptron learns
 - **Interactive Controls**: 
   - Adjust learning rate to see how it affects convergence speed
   - Change the target line slope and intercept
@@ -49,9 +51,11 @@ The perceptron learns through these steps:
 ### Prerequisites
 
 - A modern web browser (Chrome, Firefox, Safari, or Edge)
-- No server or build tools required!
+- NoView Online
 
-### Installation
+**Just visit:** [https://christopherdkeith.github.io/ai-perceptron-demo/](https://christopherdkeith.github.io/ai-perceptron-demo/)
+
+### Run Locally
 
 1. Clone the repository:
    ```bash
@@ -59,8 +63,9 @@ The perceptron learns through these steps:
    cd ai-perceptron-demo
    ```
 
-2. Open `perceptron-demo.html` in your web browser:
+2. Open `index.html` in your web browser:
    - Double-click the file, or
+   - Right-click and select "Open with" your browser
    - Right-click and select "Open with" your browser, or
    - Use a local server: `python -m http.server 8000`
 
@@ -75,7 +80,8 @@ The perceptron learns through these steps:
 4. **Reset and repeat** to see different learning trajectories
 
 ## Project Structure
-
+index.html               # Main HTML interface (GitHub Pages entry point)
+├── perceptron-demo.html     # Same as index.html (alternative access)
 ```
 ai-perceptron-demo/
 ├── perceptron-demo.html    # Main HTML interface
@@ -111,7 +117,7 @@ The perceptron uses supervised learning to adjust its parameters:
 ## Technical Details
 
 - **Built with**: Vanilla JavaScript (ES5 for broad compatibility)
-- **Visualization**: Highcharts library for interactive scatter plots
+- **Visualisation**: Highcharts library for interactive scatter plots
 - **No Dependencies**: No build tools, bundlers, or frameworks required
 - **Pure Client-Side**: Runs entirely in the browser
 
@@ -145,4 +151,4 @@ This demo was created as an educational tool to help people understand the found
 
 ---
 
-**Learning Note**: While modern neural networks are far more complex, they build on these same principles: adjusting parameters (weights) based on errors to minimize mistakes. The perceptron demonstrates this fundamental learning process in its simplest form.
+**Learning Note**: While modern neural networks are far more complex, they build on these same principles: adjusting parameters (weights) based on errors to minimise mistakes. The perceptron demonstrates this fundamental learning process in its simplest form.
