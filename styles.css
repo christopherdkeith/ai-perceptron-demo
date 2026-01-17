@@ -13,9 +13,41 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 h1 {
     color: #333;
+    margin: 0;
+    flex: 1;
     text-align: center;
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #24292e;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.github-link:hover {
+    background-color: #2c3136;
+}
+
+.github-link svg {
+    width: 20px;
+    height: 20px;
 }
 
 .content {
