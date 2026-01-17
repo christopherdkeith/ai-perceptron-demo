@@ -69,7 +69,25 @@ function initChart() {
                 color: '#f44336',
                 lineWidth: 2,
                 data: [],
-                enableMouseTracking: false
+                enableMouseTracking: false,
+                dataLabels: {
+                    enabled: true,
+                    formatter: function() {
+                        // Only show label on the middle point
+                        if (this.point.index === Math.floor(this.series.data.length / 2)) {
+                            var sign = targetIntercept >= 0 ? ' + ' : ' ';
+                            return 'Target: y = ' + targetSlope + 'x' + sign + targetIntercept;
+                        }
+                        return null;
+                    },
+                    style: {
+                        color: '#f44336',
+                        fontWeight: 'bold',
+                        fontSize: '12px',
+                        textOutline: '2px white'
+                    },
+                    y: -20
+                }
             },
             {
                 name: 'Decision Boundary',
@@ -78,7 +96,29 @@ function initChart() {
                 lineWidth: 2,
                 dashStyle: 'Dash',
                 data: [],
-                enableMouseTracking: false
+                enableMouseTracking: false,
+                dataLabels: {
+                    enabled: true,
+                    formatter: function() {
+                        // Only show label on the middle point and if we have valid data
+                        if (this.point.index === Math.floor(this.series.data.length / 2) && weightY !== 0) {
+                            // Calculate the equation from perceptron weights
+                            // Decision boundary: y = -(weightX * x + bias) / weightY
+                            var slope = (-weightX / weightY).toFixed(2);
+                            var intercept = (-bias / weightY).toFixed(2);
+                            var sign = intercept >= 0 ? ' + ' : ' ';
+                            return 'Perceptron: y = ' + slope + 'x' + sign + Math.abs(intercept);
+                        }
+                        return null;
+                    },
+                    style: {
+                        color: '#FF9800',
+                        fontWeight: 'bold',
+                        fontSize: '12px',
+                        textOutline: '2px white'
+                    },
+                    y: 30
+                }
             }
         ]
     });
