@@ -20,7 +20,39 @@ function initChart() {
     chart = Highcharts.chart('chart-container', {
         chart: {
             type: 'scatter',
-            zoomType: 'xy'
+            zoomType: 'xy',
+            events: {
+                click: function(e) {
+                    // Only allow clicking if perceptron has been trained (decision boundary exists)
+                    if (weightY === 0) {
+                        alert('Please train the perceptron first before testing new points!');
+                        return;
+                    }
+                    
+                    // Get click coordinates relative to the chart axes
+                    var xValue = e.xAxis[0].value;
+                    var yValue = e.yAxis[0].value;
+                    
+                    // Calculate the CORRECT label based on target line
+                    var lineY = targetSlope * xValue + targetIntercept;
+                    var correctLabel = yValue > lineY ? 1 : -1;
+                    
+                    // Make prediction using the perceptron
+                    var prediction = predict(xValue, yValue);
+                    
+                    // Determine which series to add the point to
+                    var seriesIndex;
+                    if (prediction === correctLabel) {
+                        // Correct prediction - add to green or blue diamond series
+                        seriesIndex = prediction === 1 ? 4 : 5;
+                    } else {
+                        // Wrong prediction - add to red diamond series
+                        seriesIndex = 6;
+                    }
+                    
+                    chart.series[seriesIndex].addPoint([xValue, yValue], true);
+                }
+            }
         },
         title: {
             text: 'Perceptron Learning Visualisation'
@@ -118,6 +150,90 @@ function initChart() {
                         textOutline: '2px white'
                     },
                     y: 30
+                }            },
+            {
+                name: 'Test Point (Predicted +1)',
+                color: '#4CAF50',
+                data: [],
+                marker: {
+                    symbol: 'diamond',
+                    radius: 8,
+                    lineWidth: 2,
+                    lineColor: '#000000'
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        var x = this.x;
+                        var y = this.y;
+                        var sum = (weightX * x + weightY * y + bias);
+                        var prediction = sum >= 0 ? '+1' : '-1';
+                        return '<b>Test Point</b><br/>' +
+                               'Coordinates: (' + x.toFixed(2) + ', ' + y.toFixed(2) + ')<br/>' +
+                               '<b>Calculation:</b><br/>' +
+                               '(' + weightX.toFixed(3) + ' × ' + x.toFixed(2) + ') + ' +
+                               '(' + weightY.toFixed(3) + ' × ' + y.toFixed(2) + ') + ' +
+                               bias.toFixed(3) + '<br/>' +
+                               '= ' + sum.toFixed(3) + '<br/>' +
+                               '<b>Prediction: ' + prediction + '</b> (correct)';
+                    }
+                }
+            },
+            {
+                name: 'Test Point (Predicted -1)',
+                color: '#2196F3',
+                data: [],
+                marker: {
+                    symbol: 'diamond',
+                    radius: 8,
+                    lineWidth: 2,
+                    lineColor: '#000000'
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        var x = this.x;
+                        var y = this.y;
+                        var sum = (weightX * x + weightY * y + bias);
+                        var prediction = sum >= 0 ? '+1' : '-1';
+                        return '<b>Test Point</b><br/>' +
+                               'Coordinates: (' + x.toFixed(2) + ', ' + y.toFixed(2) + ')<br/>' +
+                               '<b>Calculation:</b><br/>' +
+                               '(' + weightX.toFixed(3) + ' × ' + x.toFixed(2) + ') + ' +
+                               '(' + weightY.toFixed(3) + ' × ' + y.toFixed(2) + ') + ' +
+                               bias.toFixed(3) + '<br/>' +
+                               '= ' + sum.toFixed(3) + '<br/>' +
+                               '<b>Prediction: ' + prediction + '</b> (correct)';
+                    }
+                }
+            },
+            {
+                name: 'Test Point (WRONG)',
+                color: '#f44336',
+                data: [],
+                marker: {
+                    symbol: 'diamond',
+                    radius: 8,
+                    lineWidth: 2,
+                    lineColor: '#000000'
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        var x = this.x;
+                        var y = this.y;
+                        var sum = (weightX * x + weightY * y + bias);
+                        var prediction = sum >= 0 ? '+1' : '-1';
+                        // Calculate correct label
+                        var lineY = targetSlope * x + targetIntercept;
+                        var correctLabel = y > lineY ? '+1' : '-1';
+                        return '<b>Test Point (WRONG)</b><br/>' +
+                               'Coordinates: (' + x.toFixed(2) + ', ' + y.toFixed(2) + ')<br/>' +
+                               '<b>Calculation:</b><br/>' +
+                               '(' + weightX.toFixed(3) + ' × ' + x.toFixed(2) + ') + ' +
+                               '(' + weightY.toFixed(3) + ' × ' + y.toFixed(2) + ') + ' +
+                               bias.toFixed(3) + '<br/>' +
+                               '= ' + sum.toFixed(3) + '<br/>' +
+                               '<b>Prediction: ' + prediction + '</b><br/>' +
+                               '<span style="color: #f44336">Correct label: ' + correctLabel + '</span>';
+                    }
                 }
             }
         ]
