@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perceptron Demo - Linear Classification</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Perceptron Demo - Linear Classification</h1>
+
+        <div class="content">
+            <div class="left-panel">
+                <div id="chart-container"></div>
+
+                <div class="explanation">
+                    <h4>Understanding the Perceptron:</h4>
+                    <p><strong>In a nutshell:</strong> A perceptron is the simplest neural network, a network of just
+                        one neuron. The neuron consists of just three numbers: Weight_x, Weight_y, and Bias. In this
+                        scenario these three
+                        numbers define a line! By adjusting these numbers, the perceptron learns to position and angle a
+                        line that separates points into two groups. That's the key insight: <em>the perceptron IS the
+                            line</em>—it stores the line's definition in its weights and bias. Watch as these three
+                        numbers change during training to find the perfect line.</p>
+
+                    <p><strong>This is how AI learns:</strong> The perceptron demonstrates the core principle behind
+                        most artificial intelligence. We start with random values (or zeros), check how many mistakes
+                        we're making, then adjust our numbers bit by bit to reduce those errors. Learning isn't
+                        magic—it's systematic trial and error: measure mistakes, tweak the numbers, repeat until errors
+                        are minimized. From simple perceptrons to complex neural networks, this is the fundamental
+                        process: <em>learning = finding the parameter values that best fit the data</em>.</p>
+                </div>
+
+                <div class="explanation">
+                    <h4>How it works:</h4>
+                    <p><strong>Target Line:</strong> y = mx + b (shown in red)<br>
+                        Points above the line are labeled as +1 (green), below as -1 (blue).</p>
+                    <p><strong>Perceptron Learning:</strong> In each training round, the perceptron learns through these
+                        steps:</p>
+                    <ol style="margin: 10px 0; padding-left: 25px; font-size: 13px;">
+                        <li><strong>Make predictions:</strong> For each point, the perceptron calculates (Weight_x ×
+                            x-coordinate) + (Weight_y × y-coordinate) + Bias. If the result ≥ 0, it predicts +1 (above),
+                            otherwise -1 (below).</li>
+                        <li><strong>Find mistakes:</strong> Compare the prediction with the correct answer (whether the
+                            point should be +1 or -1 based on the red target line). If they don't match, the perceptron
+                            made an error.</li>
+                        <li><strong>Adjust weights:</strong> When wrong, the perceptron updates its weights using: <br>
+                            New Weight = Old Weight + (Learning Rate × Error × Input)<br>
+                            This nudges the decision boundary toward the correct classification.</li>
+                        <li><strong>Repeat:</strong> The perceptron goes through all points, making corrections until it
+                            classifies everything correctly.</li>
+                    </ol>
+                    <p><strong>Decision Boundary:</strong> The dashed orange line shows where the perceptron currently
+                        thinks the boundary is. Watch it move toward the red target line as training progresses!</p>
+                    <p><strong>Goal:</strong> Make the decision boundary match the target line by correctly classifying
+                        all points.</p>
+                </div>
+
+                <div class="explanation">
+                    <h4>Getting Started:</h4>
+                    <ol>
+                        <li><strong>Click "Start Training"</strong> to watch the perceptron learn. The orange dashed
+                            line (decision boundary) will adjust as it learns.</li>
+                        <li><strong>Watch the accuracy increase</strong> as the perceptron corrects its mistakes and the
+                            decision boundary moves toward the red target line.</li>
+                        <li><strong>Adjust the learning rate</strong> to see how it affects learning speed. Try 0.01
+                            (slow and steady) vs 0.5 (fast but jumpy).</li>
+                        <li><strong>Change the target line</strong> slope and intercept to create different
+                            classification problems.</li>
+                        <li><strong>Generate new data points</strong> to see how the perceptron adapts to different
+                            point distributions.</li>
+                        <li><strong>Reset the perceptron</strong> to start learning from scratch with new random
+                            weights.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="info-box">
+                    <h3>Training Status</h3>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Training Round:
+                            <span class="info-help">?
+                                <span class="tooltip">Number of complete passes through all training data points</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="training-round">0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Accuracy:
+                            <span class="info-help">?
+                                <span class="tooltip">Percentage of correctly classified points</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="accuracy">0%</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Correct:
+                            <span class="info-help">?
+                                <span class="tooltip">Number of points the perceptron classified correctly</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="correct">0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Wrong:
+                            <span class="info-help">?
+                                <span class="tooltip">Number of points the perceptron misclassified</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="wrong">0</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Perceptron Weights</h3>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Weight (x):
+                            <span class="info-help">?
+                                <span class="tooltip">How much influence the x-coordinate has on the decision</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="weight-x">0.000</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Weight (y):
+                            <span class="info-help">?
+                                <span class="tooltip">How much influence the y-coordinate has on the decision</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="weight-y">0.000</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Bias:
+                            <span class="info-help">?
+                                <span class="tooltip">Shifts the decision boundary, allowing it to not pass through the
+                                    origin</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="bias">0.000</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Target Line</h3>
+                    <div class="info-row">
+                        <label class="info-label" for="target-slope">
+                            Slope (m):
+                            <span class="info-help">?
+                                <span class="tooltip">The steepness of the target line - how much y changes per unit of
+                                    x</span>
+                            </span>
+                        </label>
+                        <input type="number" class="info-input" id="target-slope" value="0.5" step="0.1"
+                            onchange="updateTargetLine()">
+                    </div>
+                    <div class="info-row">
+                        <label class="info-label" for="target-intercept">
+                            Intercept (b):
+                            <span class="info-help">?
+                                <span class="tooltip">Where the target line crosses the y-axis (when x = 0)</span>
+                            </span>
+                        </label>
+                        <input type="number" class="info-input" id="target-intercept" value="0.2" step="0.1"
+                            onchange="updateTargetLine()">
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">
+                            Equation:
+                            <span class="info-help">?
+                                <span class="tooltip">The mathematical formula defining the target line the perceptron
+                                    is learning</span>
+                            </span>
+                        </span>
+                        <span class="info-value" id="target-equation">y = 0.5x + 0.2</span>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <h3>Controls</h3>
+
+                    <div class="input-group">
+                        <label for="learning-rate">
+                            Learning Rate:
+                            <span class="info-help">?
+                                <span class="tooltip">Controls how much the weights change each time the perceptron
+                                    makes a mistake. Higher values learn faster but may overshoot.</span>
+                            </span>
+                        </label>
+                        <input type="number" id="learning-rate" value="0.1" step="0.01" min="0.01" max="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="num-points">
+                            Number of Points:
+                            <span class="info-help">?
+                                <span class="tooltip">How many random data points to generate for training the
+                                    perceptron</span>
+                            </span>
+                        </label>
+                        <input type="number" id="num-points" value="50" step="10" min="10" max="200">
+                    </div>
+
+                    <button class="btn-primary" id="start-btn" onclick="startTraining()">Start Training</button>
+                    <button class="btn-danger" id="stop-btn" onclick="stopTraining()" disabled>Stop Training</button>
+                    <button class="btn-secondary" onclick="reset()">Reset Perceptron</button>
+                    <button class="btn-secondary" onclick="generateNewData()">New Data Points</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="perceptron.js"></script>
+    <script src="ui.js"></script>
+</body>
+
+</html>
