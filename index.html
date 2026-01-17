@@ -48,7 +48,7 @@
 
                 <div class="explanation">
                     <h4>How it works:</h4>
-                    <p><strong>Target Line:</strong> y = mx + b (shown in red)<br>
+                    <p><strong>Target Line:</strong> y = mx + b (or y = mx + c) shown in red<br>
                         Points above the line are labeled as +1 (green), below as -1 (blue).</p>
                     <p><strong>Perceptron Learning:</strong> In each training round, the perceptron learns through these
                         steps:</p>
@@ -178,9 +178,10 @@
                     </div>
                     <div class="info-row">
                         <label class="info-label" for="target-intercept">
-                            Intercept (b):
+                            Intercept (b/c):
                             <span class="info-help">?
-                                <span class="tooltip">Where the target line crosses the y-axis (when x = 0)</span>
+                                <span class="tooltip">Where the target line crosses the y-axis (when x = 0). Also called
+                                    b or c depending on region.</span>
                             </span>
                         </label>
                         <input type="number" class="info-input" id="target-intercept" value="0.2" step="0.1"
