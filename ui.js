@@ -232,7 +232,7 @@ function initChart() {
                                bias.toFixed(3) + '<br/>' +
                                '= ' + sum.toFixed(3) + '<br/>' +
                                '<b>Prediction: ' + prediction + '</b><br/>' +
-                               '<span style="color: #f44336">Correct label: ' + correctLabel + '</span>';
+                               '<span style="color: #f44336">Correct classification: ' + correctLabel + '</span>';
                     }
                 }
             }
@@ -253,10 +253,10 @@ function generateTrainingData() {
         // Calculate where the point should be relative to target line
         var lineY = targetSlope * x + targetIntercept;
         
-        // Label: +1 if point is above the line, -1 if below
-        var label = y > lineY ? 1 : -1;
+        // Classification: +1 if point is above the line, -1 if below
+        var classification = y > lineY ? 1 : -1;
         
-        trainingData.push({ x: x, y: y, label: label });
+        trainingData.push({ x: x, y: y, classification: classification });
     }
     
     updateChart();
@@ -334,7 +334,7 @@ function updateDisplay() {
     var correct = 0;
     for (var i = 0; i < trainingData.length; i++) {
         var point = trainingData[i];
-        if (predict(point.x, point.y) === point.label) {
+        if (predict(point.x, point.y) === point.classification) {
             correct++;
         }
     }
@@ -351,10 +351,10 @@ function updateChart() {
     var abovePoints = [];
     var belowPoints = [];
     
-    // Separate points by their label
+    // Separate points by their classification
     for (var i = 0; i < trainingData.length; i++) {
         var point = trainingData[i];
-        if (point.label === 1) {
+        if (point.classification === 1) {
             abovePoints.push([point.x, point.y]);
         } else {
             belowPoints.push([point.x, point.y]);

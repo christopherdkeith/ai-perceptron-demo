@@ -46,7 +46,7 @@ function trainOneRound() {
         // error = 0  means we got it right (no change needed)
         // error = 2  means we predicted -1 but should be +1 (we're too low, move line up)
         // error = -2 means we predicted +1 but should be -1 (we're too high, move line down)
-        var error = point.label - prediction;
+        var error = point.classification - prediction;
         
         // If prediction was wrong (error != 0), update weights to correct the mistake
         if (error !== 0) {
